@@ -178,6 +178,7 @@ def generate_diff(file_path1, file_path2):
     return build_diff(data1, data2)
 
 
+
 def main():
     args = parse_args()
     if args.format == 'json':
