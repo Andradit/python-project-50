@@ -1,4 +1,22 @@
-from gendiff.scripts.gendiff import generate_diff
+import pytest
+from gendiff.scripts.gendiff import gendiff
 
-def test_generate_diff():
-    generate_diff('file1.json', 'file2.json')
+
+# file_1 = open('file1.txt', 'r')
+
+# file = open('flat_stylish.txt', 'r')
+
+# @pytest.mark.parametrize()
+# def coll():
+#     return {'a': {'b': {'c': 3}}}
+
+# @pytest.mark.parametrize('file1.json, file2.json', open('flat_stylish.txt', 'r'))
+def test_gendiff():
+    # assert gendiff('file1.json', 'file2.json') == open(
+    #     'tests/fixtures/flat_stylish.txt')
+    # assert gendiff('file1.json', 'file2.json') == open(
+    #     'tests/fixtures/flat_plain.txt', 'r')
+    assert gendiff('file3.json', 'file4.json') == open(
+        'tests/fixtures/nested_stylish.txt', 'r')
+    assert gendiff('file3.json', 'file4.json') == open(
+        'tests/fixtures/nested_plain.txt', 'r')

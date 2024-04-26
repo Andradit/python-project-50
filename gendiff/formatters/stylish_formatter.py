@@ -23,44 +23,70 @@ def str_formatter(value, amount_of_indent):
     return walk(value, depth=amount_of_indent + 2)
 
 
+def format_bool(result_list):
+    for index, string in enumerate(result_list):
+        if ' 0' in string:
+            new_string = string.replace(" 0", ' null')
+            result_list[index] = new_string
+        if 'True' in string:
+            new_string = string.replace("True", 'true')
+            result_list[index] = new_string
+        if 'False' in string:
+            new_string = string.replace("False", 'false')
+            result_list[index] = new_string
+
+
+def format_deleted(value, res_list, depth, dict_list_item):
+    if value == 'deleted':
+        res_list.append(
+            f'{SPACES * depth}{SPACES_DEL}{dict_list_item["key"]}:'
+            f' {str_formatter(dict_list_item["old_value"], depth)}')
+
+
+def format_nested(value, res_list, depth, dict_list_item):
+    if value == 'nested':
+        res_list.append(
+            f'{SPACES * depth}{SPACES}{dict_list_item["key"]}: {"{"}')
+        res_list += stylish_formatter(dict_list_item["children"], depth + 1)
+        res_list.append(f'{SPACES * depth}{SPACES}{"}"}')
+
+
+def format_changed(value, res_list, depth, dict_list_item):
+    if value == 'changed':
+        res_list.append(
+            f'{SPACES * depth}{SPACES_DEL}{dict_list_item["key"]}: '
+            f'{str_formatter(dict_list_item["old_value"], depth)}')
+        res_list.append(
+            f'{SPACES * depth}{SPACES_ADD}{dict_list_item["key"]}: '
+            f'{str_formatter(dict_list_item["new_value"], depth)}')
+
+
+def format_unchanged(value, res_list, depth, dict_list_item):
+    if value == 'unchanged':
+        res_list.append(
+            f'{SPACES * depth}{SPACES}{dict_list_item["key"]}: '
+            f'{str_formatter(dict_list_item["value"], depth)}')
+
+
+def format_added(value, res_list, depth, dict_list_item):
+    if value == 'added':
+        res_list.append(
+            f'{SPACES * depth}{SPACES_ADD}{dict_list_item["key"]}: '
+            f'{str_formatter(dict_list_item["new_value"], depth)}')
+
+
 def stylish_formatter(func_out_res, depth=0):
     res_list = []
 
     for dict_list_item in func_out_res:
         for key, value in dict_list_item.items():
-            if value == 'deleted':
-                res_list.append(
-                    f'{SPACES * depth}{SPACES_DEL}{dict_list_item["key"]}:'
-                    f' {str_formatter(dict_list_item["old_value"], depth)}')
-            elif value == 'nested':
-                res_list.append(
-                    f'{SPACES * depth}{SPACES}{dict_list_item["key"]}: {"{"}')
-                res_list += stylish_formatter(dict_list_item["children"],
-                                              depth + 1)
-                res_list.append(f'{SPACES * depth}{SPACES}{"}"}')
-            elif value == 'changed':
-                res_list.append(
-                    f'{SPACES * depth}{SPACES_DEL}{dict_list_item["key"]}: '
-                    f'{str_formatter(dict_list_item["old_value"], depth)}')
-                res_list.append(
-                    f'{SPACES * depth}{SPACES_ADD}{dict_list_item["key"]}: '
-                    f'{str_formatter(dict_list_item["new_value"], depth)}')
-            elif value == 'unchanged':
-                res_list.append(
-                    f'{SPACES * depth}{SPACES}{dict_list_item["key"]}: '
-                    f'{str_formatter(dict_list_item["value"], depth)}')
-            elif value == 'added':
-                res_list.append(
-                    f'{SPACES * depth}{SPACES_ADD}{dict_list_item["key"]}: '
-                    f'{str_formatter(dict_list_item["new_value"], depth)}')
+            format_deleted(value, res_list, depth, dict_list_item)
+            format_nested(value, res_list, depth, dict_list_item)
+            format_changed(value, res_list, depth, dict_list_item)
+            format_unchanged(value, res_list, depth, dict_list_item)
+            format_added(value, res_list, depth, dict_list_item)
 
-    for index, string in enumerate(res_list):
-        if 'True' in string:
-            new_string = string.replace("True", 'true')
-            res_list[index] = new_string
-        if 'False' in string:
-            new_string = string.replace("False", 'false')
-            res_list[index] = new_string
+    format_bool(res_list)
 
     return res_list
 
