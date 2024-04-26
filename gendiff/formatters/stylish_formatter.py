@@ -13,8 +13,7 @@ def str_formatter(value, amount_of_indent):
             res_list.append(
                 f'''{SPACES * depth}{key}: '''
                 f'''{walk(v_value, depth + 1)
-                if isinstance(v_value, dict) else v_value}'''
-            )
+                if isinstance(v_value, dict) else v_value}''')
 
         res_list.append(f'{SPACES * (depth - 1)}{"}"}')
         result_string = '\n'.join(res_list)

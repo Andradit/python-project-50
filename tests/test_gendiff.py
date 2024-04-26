@@ -1,4 +1,3 @@
-import pytest
 from gendiff.scripts.gendiff import gendiff
 
 
