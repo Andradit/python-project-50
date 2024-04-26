@@ -57,7 +57,7 @@ data_4 = {
     "common": {
         "follow": False,
         "setting1": "Value 1",
-        "setting3": 0,
+        "setting3": None,
         "setting4": "blah blah",
         "setting5": {
             "key5": "value5"

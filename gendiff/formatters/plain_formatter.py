@@ -6,8 +6,8 @@ def format_key(key, path=None):
 
 def format_bool(result_list):
     for index, string in enumerate(result_list):
-        if '0' in string:
-            new_string = string.replace("'0'", 'null')
+        if 'None' in string:
+            new_string = string.replace("'None'", 'null')
             result_list[index] = new_string
         if 'True' in string:
             new_string = string.replace("'True'", 'true')
