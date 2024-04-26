@@ -32,7 +32,8 @@ def gendiff(file_1, file_2, format='stylish'):
 
 def main():
     form = parse_args().format
-    return gendiff(parse_args().first_file, parse_args().second_file, form)
+    print(gendiff(parse_args().first_file, parse_args().second_file, form))
+    return 0
 
 
 if __name__ == '__main__':
