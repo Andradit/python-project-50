@@ -7,14 +7,20 @@ def format_key(key, path=None):
 def format_bool(result_list):
     for index, string in enumerate(result_list):
         if 'None' in string:
-            new_string = string.replace("'None'", 'null')
+            new_string = string.replace("None", 'null')
             result_list[index] = new_string
         if 'True' in string:
-            new_string = string.replace("'True'", 'true')
+            new_string = string.replace("True", 'true')
             result_list[index] = new_string
         elif 'False' in string:
-            new_string = string.replace("'False'", 'false')
+            new_string = string.replace("False", 'false')
             result_list[index] = new_string
+
+
+def format_value(value):
+    if isinstance(value, str):
+        return f"'{value}'"
+    return value
 
 
 def format_nested(value, res_list, dict_list_item, path_name):
@@ -30,22 +36,25 @@ def format_deleted(value, res_list, path_name):
 
 def format_changed(value, res_list, dict_list_item, path_name):
     if value == 'changed':
+
         string = (f"Property '{path_name}' was updated. From "
-                  f"'{dict_list_item['old_value']}' to "
-                  f"'{dict_list_item['new_value']}'")
+                  f"{format_value(dict_list_item['old_value'])} to "
+                  f"{format_value(dict_list_item['new_value'])}")
         if isinstance(dict_list_item['old_value'], dict):
             string = (f"Property '{path_name}' was updated. From "
-                      f"[complex value] to '{dict_list_item['new_value']}'")
+                      f"[complex value] to "
+                      f"{format_value(dict_list_item['new_value'])}")
         if isinstance(dict_list_item['new_value'], dict):
             string = (f"Property '{path_name}' was updated. From "
-                      f"'{dict_list_item['old_value']}' to [complex value]")
+                      f"{format_value(dict_list_item['old_value'])} to "
+                      f"[complex value]")
         res_list.append(string)
 
 
 def format_added(value, res_list, dict_list_item, path_name):
     if value == 'added':
         string = (f"Property '{path_name}' was added with value: "
-                  f"'{dict_list_item['new_value']}'")
+                  f"{format_value(dict_list_item['new_value'])}")
         if isinstance(dict_list_item['new_value'], dict):
             string = (f"Property '{path_name}' was added with value: "
                       f"[complex value]")
