@@ -12,11 +12,7 @@ from gendiff.scripts.gendiff import gendiff
 
 # @pytest.mark.parametrize('file1.json, file2.json', open('flat_stylish.txt', 'r'))
 def test_gendiff():
-    # assert gendiff('file1.json', 'file2.json') == open(
-    #     'tests/fixtures/flat_stylish.txt')
-    # assert gendiff('file1.json', 'file2.json') == open(
-    #     'tests/fixtures/flat_plain.txt', 'r')
     assert gendiff('file3.json', 'file4.json') == open(
-        'tests/fixtures/nested_stylish.txt', 'r')
-    assert gendiff('file3.json', 'file4.json') == open(
-        'tests/fixtures/nested_plain.txt', 'r')
+        'tests/fixtures/nested_stylish.txt', 'r').read()
+    assert gendiff('file3.json', 'file4.json', 'plain') == open(
+        'tests/fixtures/nested_plain.txt', 'r').read()

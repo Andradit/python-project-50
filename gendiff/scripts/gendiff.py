@@ -20,16 +20,19 @@ def parse_args():
     return parser.parse_args()
 
 
-def gendiff(file_1, file_2, formatter=format_stylish):
-    if parse_args().format == 'json':
+def gendiff(file_1, file_2, format='stylish'):
+    if format == 'json':
         formatter = format_json
-    if parse_args().format == 'plain':
+    if format == 'plain':
         formatter = format_plain
-    return formatter(generate_diff(file_1, file_2))
+    if format == 'stylish':
+        formatter = format_stylish
+    return formatter(generate_diff(file_1, file_2)) + '\n'
 
 
 def main():
-    return gendiff(parse_args().first_file, parse_args().second_file)
+    form = parse_args().format
+    return gendiff(parse_args().first_file, parse_args().second_file, form)
 
 
 if __name__ == '__main__':
