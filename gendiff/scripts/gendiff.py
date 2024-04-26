@@ -27,7 +27,7 @@ def gendiff(file_1, file_2, format='stylish'):
         formatter = format_plain
     if format == 'stylish':
         formatter = format_stylish
-    return formatter(generate_diff(file_1, file_2)) + '\n'
+    return formatter(generate_diff(file_1, file_2))
 
 
 def main():
