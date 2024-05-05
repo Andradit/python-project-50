@@ -66,7 +66,12 @@ or
 ```bash    
 $ gendiff file1.yaml file2.yaml
 ```
-# ASCINEMA
+To change the output format, add the flag: **-f** or **--format**
+```bash    
+$ gendiff -f plain file1.json file2.json
+```
+
+[![asciicast](https://asciinema.org/a/cWSF3vNqveRlVGYB1ujzeE9aU.svg)](https://asciinema.org/a/cWSF3vNqveRlVGYB1ujzeE9aU)
 
 ## Starting comparison of two files of different types
 To run it, enter the following command, selecting the json and yaml formats
@@ -75,9 +80,9 @@ $ gendiff file1.json file3.yaml
 ```
 or
 ```bash    
-$ gendiff file2.yaml file4.json
+$ gendiff --format json file2.yaml file4.json
 ```
-# ASCINEMA
+[![asciicast](https://asciinema.org/a/jDJpDcXtnEPEPM07VxP2wMrXD.svg)](https://asciinema.org/a/jDJpDcXtnEPEPM07VxP2wMrXD)
 
 ## Possible Improvements
 
