@@ -9,8 +9,9 @@ def format_bool(value):
         value = 'null'
     if value is True:
         value = 'true'
-    if not value:
+    if not value or value == 0:
         value = 'false'
+
     return value
 
 
