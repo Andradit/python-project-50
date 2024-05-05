@@ -9,7 +9,7 @@ def format_bool(value):
         value = 'null'
     if value is True:
         value = 'true'
-    if not value or value == 0:
+    if value is False:
         value = 'false'
 
     return value
