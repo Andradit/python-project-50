@@ -4,18 +4,16 @@ SPACES_ADD = '  + '
 
 
 def format_bool(value):
-    if value == 'None':
-        value = value.replace("None", 'null')
-    if value == 'True':
-        value = value.replace("True", 'true')
-    if value == 'False':
-        value = value.replace("False", 'false')
+    if isinstance(value, bool):
+        value = str(value).lower()
     return value
 
 
-def str_formatter(value, amount_of_indent):
+def format_str(value, amount_of_indent):
     if not isinstance(value, dict):
-        return format_bool(str(value))
+        if value is None:
+            return 'null'
+        return format_bool(value)
 
     def walk(node, depth):
         value_summary = ['{']
@@ -35,7 +33,7 @@ def format_deleted(value, value_summary, depth, dictionary_lists):
     if value == 'deleted':
         value_summary.append(
             f'{SPACES * depth}{SPACES_DEL}{dictionary_lists["key"]}:'
-            f' {str_formatter(dictionary_lists["old_value"], depth)}')
+            f' {format_str(dictionary_lists["old_value"], depth)}')
 
 
 def format_nested(value, value_summary, depth, dictionary_lists):
@@ -51,24 +49,24 @@ def format_changed(value, value_summary, depth, dictionary_lists):
     if value == 'changed':
         value_summary.append(
             f'{SPACES * depth}{SPACES_DEL}{dictionary_lists["key"]}: '
-            f'{str_formatter(dictionary_lists["old_value"], depth)}')
+            f'{format_str(dictionary_lists["old_value"], depth)}')
         value_summary.append(
             f'{SPACES * depth}{SPACES_ADD}{dictionary_lists["key"]}: '
-            f'{str_formatter(dictionary_lists["new_value"], depth)}')
+            f'{format_str(dictionary_lists["new_value"], depth)}')
 
 
 def format_unchanged(value, value_summary, depth, dictionary_lists):
     if value == 'unchanged':
         value_summary.append(
             f'{SPACES * depth}{SPACES}{dictionary_lists["key"]}: '
-            f'{str_formatter(dictionary_lists["value"], depth)}')
+            f'{format_str(dictionary_lists["value"], depth)}')
 
 
 def format_added(value, value_summary, depth, dictionary_lists):
     if value == 'added':
         value_summary.append(
             f'{SPACES * depth}{SPACES_ADD}{dictionary_lists["key"]}: '
-            f'{str_formatter(dictionary_lists["new_value"], depth)}')
+            f'{format_str(dictionary_lists["new_value"], depth)}')
 
 
 def stylish_formatter(func_out_res, depth=0):

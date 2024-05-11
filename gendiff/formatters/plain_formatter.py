@@ -5,17 +5,14 @@ def format_key(key, path=None):
 
 
 def format_bool(value):
-    if value is None:
-        value = 'null'
-    if value is True:
-        value = 'true'
-    if value is False:
-        value = 'false'
-
+    if isinstance(value, bool):
+        value = str(value).lower()
     return value
 
 
 def format_value(value):
+    if value is None:
+        return 'null'
     if isinstance(value, str):
         return f"'{value}'"
     if isinstance(value, dict):
