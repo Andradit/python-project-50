@@ -22,7 +22,7 @@
         "key": "setting3",
         "action": "changed",
         "old_value": true,
-        "new_value": 0
+        "new_value": null
       },
       {
         "key": "setting4",
