@@ -40,7 +40,7 @@ def format_nested(value, value_summary, depth, dictionary_lists):
     if value == 'nested':
         value_summary.append(
             f'{SPACES * depth}{SPACES}{dictionary_lists["key"]}: {"{"}')
-        value_summary += stylish_formatter(dictionary_lists["children"],
+        value_summary += format_all_values(dictionary_lists["children"],
                                            depth + 1)
         value_summary.append(f'{SPACES * depth}{SPACES}{"}"}')
 
@@ -69,7 +69,7 @@ def format_added(value, value_summary, depth, dictionary_lists):
             f'{format_str(dictionary_lists["new_value"], depth)}')
 
 
-def stylish_formatter(func_out_res, depth=0):
+def format_all_values(func_out_res, depth=0):
     value_summary = []
 
     for dictionary_lists in func_out_res:
@@ -84,6 +84,6 @@ def stylish_formatter(func_out_res, depth=0):
 
 
 def format_stylish(diff):
-    result = stylish_formatter(diff)
+    result = format_all_values(diff)
     result = ['{'] + result + ['}']
     return '\n'.join(result)

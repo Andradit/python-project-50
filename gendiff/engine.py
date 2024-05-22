@@ -1,14 +1,23 @@
 import json
 import yaml
+from os.path import splitext
 
 
 def read_data(path):
-    if path.endswith('.json'):
-        with open(path, 'r') as json_file:
-            return json.loads(json_file.read())
-    elif path.endswith('.yaml') or path.endswith('.yml'):
-        with open(path, 'r') as yaml_file:
-            return yaml.load(yaml_file.read(), Loader=yaml.Loader)
+    with open(path, 'r') as content_file:
+        return parse_content(content_file.read(), get_type(path))
+
+
+def get_type(path):
+    _, ext = splitext(path)
+    return ext
+
+
+def parse_content(content, file_type) -> dict:
+    if file_type == '.json':
+        return json.loads(content)
+    elif file_type == '.yaml' or file_type == '.yml':
+        return yaml.load(content, Loader=yaml.Loader)
 
 
 def build_diff(dictionary_1, dictionary_2):
